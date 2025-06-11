@@ -80,8 +80,8 @@ const SignUp = () => {
     try {
       // If OTP was already sent before, use resend API, otherwise use send API
       const apiUrl = otpSent
-        ? "https://itestify-backend-1.onrender.com/auths/resend-email-verification-token"
-        : "https://itestify-backend-1.onrender.com/auths/send-otp/";
+        ? "https://itestify-backend-38u1.onrender.com/auths/resend-email-verification-token"
+        : "https://itestify-backend-38u1.onrender.com/auths/send-otp/";
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -127,7 +127,7 @@ const SignUp = () => {
 
     try {
       const response = await fetch(
-        "https://itestify-backend-1.onrender.com/auths/register",
+        "https://itestify-backend-38u1.onrender.com/auths/register",
         {
           method: "POST",
           headers: {
