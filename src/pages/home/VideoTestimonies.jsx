@@ -27,7 +27,7 @@ const VideoTestimonies = () => {
 
   return (
     <>
-      <section className="px-6 pt-6 flex flex-col gap-3">
+      <section className="px-6 pt-6 flex flex-col gap-3 mb-4">
         <div className="flex justify-between items-center">
           <h1>Video Testimonies</h1>
           <span>See all</span>
