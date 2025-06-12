@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     if (success) {
       const timer = setTimeout(() => {
         setSuccess("");
-      }, 5000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }

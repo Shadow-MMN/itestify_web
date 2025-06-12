@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className="py-3 min-h-screen font-openSans">
+      <main className="py-3 font-openSans">
         <Outlet />
       </main>
       <Footer />
