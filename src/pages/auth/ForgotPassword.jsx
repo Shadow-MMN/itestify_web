@@ -20,13 +20,12 @@ const ForgotPassword = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  // Auto-hide success messages after 5 seconds
   const formatTime = (time) => {
     const minutes = String(Math.floor(time / 60)).padStart(2, "0");
     const seconds = String(time % 60).padStart(2, "0");
     return `${minutes}:${seconds}`;
   };
-
+  // Auto-hide success messages after 5 seconds
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
