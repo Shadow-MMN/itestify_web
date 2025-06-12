@@ -4,7 +4,6 @@ import { MdLockOutline, MdOutlineMailOutline } from "react-icons/md";
 import OTPInput from "../../components/OTPInput";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { formatTime } from "../../utils/FormatTime";
 
 const ForgotPassword = () => {
   const timer = 300; // 5 minutes for OTP validity
@@ -22,6 +21,12 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   // Auto-hide success messages after 5 seconds
+  const formatTime = (time) => {
+    const minutes = String(Math.floor(time / 60)).padStart(2, "0");
+    const seconds = String(time % 60).padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
+
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {

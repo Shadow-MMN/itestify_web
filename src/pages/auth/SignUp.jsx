@@ -6,8 +6,6 @@ import { MdLockOutline } from "react-icons/md";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import HeaderForAuth from "../../components/HeaderForAuth";
-import { formatTime } from "../../utils/FormatTime";
-import { isValidEmail } from "../../utils/isValidEmail.";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +25,16 @@ const SignUp = () => {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
   const navigate = useNavigate();
+  const formatTime = (time) => {
+    const minutes = String(Math.floor(time / 60)).padStart(2, "0");
+    const seconds = String(time % 60).padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   // Update Send OTP button state
   useEffect(() => {
