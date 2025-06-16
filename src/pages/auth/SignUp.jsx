@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlinePerson } from "react-icons/md";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -10,7 +10,7 @@ import HeaderForAuth from "../../components/HeaderForAuth";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const timerDuration = 120;
+  const timerDuration = 60;
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -23,6 +23,15 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
+  const [isRequestingOtp, setIsRequestingOtp] = useState(false); // New state for OTP loading
+
+  useEffect(() => {
+    if (infoMessage) {
+      const timeout = setTimeout(() => setInfoMessage(""), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [infoMessage]);
 
   const navigate = useNavigate();
   const formatTime = (time) => {
@@ -36,16 +45,15 @@ const SignUp = () => {
     return emailRegex.test(email);
   };
 
-  // Update Send OTP button state
   useEffect(() => {
     if (!timerActive) {
       setDisabledSendOtp(
-        !(nameValue.trim() && emailValue.trim() && isValidEmail(emailValue))
+        !(nameValue.trim() && emailValue.trim() && isValidEmail(emailValue)) ||
+          isRequestingOtp
       );
     }
-  }, [nameValue, emailValue, timerActive]);
+  }, [nameValue, emailValue, timerActive, isRequestingOtp]);
 
-  // Update Create Account button state
   useEffect(() => {
     const allFieldsFilled =
       nameValue.trim() &&
@@ -59,7 +67,6 @@ const SignUp = () => {
     setDisabledCreateAccount(!allFieldsFilled);
   }, [nameValue, emailValue, passwordValue, confirmPasswordValue, otpValue]);
 
-  // Check password match
   useEffect(() => {
     if (confirmPasswordValue.trim() && passwordValue.trim()) {
       setPasswordMismatch(passwordValue !== confirmPasswordValue);
@@ -68,25 +75,24 @@ const SignUp = () => {
     }
   }, [passwordValue, confirmPasswordValue]);
 
-  // Timer countdown effect
   useEffect(() => {
     if (!timerActive) return;
     if (countDown > 0) {
       const id = setTimeout(() => setCountDown((c) => c - 1), 1000);
       return () => clearTimeout(id);
     }
-    // Countdown finished - make send button clickable again
     setTimerActive(false);
-    setDisabledSendOtp(!(nameValue.trim() && isValidEmail(emailValue)));
-    setCountDown(timerDuration); // reset for next time
-  }, [countDown, timerActive, nameValue, emailValue]);
+    setDisabledSendOtp(
+      !(nameValue.trim() && isValidEmail(emailValue)) || isRequestingOtp
+    );
+    setCountDown(timerDuration);
+  }, [countDown, timerActive, nameValue, emailValue, isRequestingOtp]);
 
   const handleSendOtp = async () => {
     setDisabledSendOtp(true);
-    setTimerActive(true);
+    setIsRequestingOtp(true); // Start loading state
 
     try {
-      // If OTP was already sent before, use resend API, otherwise use send API
       const apiUrl = otpSent
         ? "https://itestify-backend-38u1.onrender.com/auths/resend-email-verification-token"
         : "https://itestify-backend-38u1.onrender.com/auths/send-otp/";
@@ -110,22 +116,25 @@ const SignUp = () => {
       }
 
       const data = await response.json();
-      console.log(
-        `Verification code ${otpSent ? "resent" : "sent"} successfully:`,
-        data
-      );
+      console.log(`Verification code ${otpSent ? "resent" : "sent"}:`, data);
+
       setOtpSent(true);
+      setInfoMessage(
+        `Verification code ${otpSent ? "resent" : "sent"} to your email`
+      );
       setCountDown(timerDuration);
-      alert(`Verification code ${otpSent ? "resent" : "sent"} to your email`);
+      setTimerActive(true);
     } catch (error) {
       setTimerActive(false);
       setDisabledSendOtp(!(nameValue.trim() && isValidEmail(emailValue)));
       setCountDown(timerDuration);
-      alert(
+      setInfoMessage(
         `Failed to ${otpSent ? "resend" : "send"} verification code: ${
           error.message
         }`
       );
+    } finally {
+      setIsRequestingOtp(false); // End loading state
     }
   };
 
@@ -158,7 +167,14 @@ const SignUp = () => {
 
       const data = await response.json();
       console.log("Account created successfully:", data);
-      alert("Account created successfully!");
+
+      // Store user data in localStorage
+      const userData = {
+        name: nameValue,
+        email: emailValue,
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+
       navigate("/");
     } catch (error) {
       alert(`Failed to create account: ${error.message}`);
@@ -175,10 +191,28 @@ const SignUp = () => {
     // Placeholder for Apple sign up functionality
   };
 
+  // Function to get button text based on current state
+  const getOtpButtonText = () => {
+    if (isRequestingOtp) {
+      return otpSent ? "Resending..." : "Requesting...";
+    }
+    if (timerActive) {
+      return formatTime(countDown);
+    }
+    return otpSent ? "Resend OTP" : "Request OTP";
+  };
+
   return (
     <>
       <HeaderForAuth />
       <main className="px-6 max-w-[546px] mx-auto flex flex-col gap-6">
+        {infoMessage && (
+          <div className="max-w-[546px] mx-auto px-6 mb-4">
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+              {infoMessage}
+            </div>
+          </div>
+        )}
         <h1 className="text-center text-5xl mt-4 font-bold">
           Create an account{" "}
         </h1>
@@ -264,11 +298,7 @@ const SignUp = () => {
                     disabledSendOtp ? "bg-[#787878]" : "bg-primary-70"
                   }`}
                 >
-                  {timerActive
-                    ? `${formatTime(countDown)}`
-                    : otpSent
-                    ? "Resend OTP"
-                    : "Send OTP"}
+                  {getOtpButtonText()}
                 </button>
               </div>
             </div>

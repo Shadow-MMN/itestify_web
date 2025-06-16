@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdLockOutline, MdOutlineMailOutline } from "react-icons/md";
 import { FiAlertCircle } from "react-icons/fi";
@@ -77,10 +77,16 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Handle successful login
+        // Handle successful login - store user data in localStorage
+        const userData = {
+          name: data.data.full_name,
+          email: data.data.email,
+        };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("token", data.data.token.access);
+
         console.log("Login successful:", data);
-        // You can store the token or user data here
-        // localStorage.setItem("token", data.token); // Example
         navigate("/");
       } else {
         // Handle error response from API

@@ -1,4 +1,3 @@
-import React from "react";
 import ScriptureOfTheDay from "./ScriptureOfTheDay";
 import VideoTestimonies from "./VideoTestimonies";
 import WrittenTestimonies from "./WrittenTestimonies";

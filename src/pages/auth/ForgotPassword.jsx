@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderForAuth from "../../components/HeaderForAuth";
-import { MdLockOutline, MdOutlineMailOutline } from "react-icons/md";
+import { MdLockOutline, MdOutlineMailOutline, MdCheck } from "react-icons/md";
 import OTPInput from "../../components/OTPInput";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ForgotPassword = () => {
@@ -18,6 +18,7 @@ const ForgotPassword = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
   const formatTime = (time) => {
@@ -25,6 +26,7 @@ const ForgotPassword = () => {
     const seconds = String(time % 60).padStart(2, "0");
     return `${minutes}:${seconds}`;
   };
+
   // Auto-hide success messages after 5 seconds
   useEffect(() => {
     if (success) {
@@ -203,10 +205,8 @@ const ForgotPassword = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess("Password reset successfully! Redirecting to home...");
-        setTimeout(() => {
-          navigate("/"); // Navigate to home page
-        }, 2000);
+        // Show modal instead of success message
+        setShowSuccessModal(true);
       } else {
         setError(data.message || "Failed to reset password. Please try again.");
       }
@@ -218,10 +218,15 @@ const ForgotPassword = () => {
     }
   };
 
+  const handleModalOkay = () => {
+    setShowSuccessModal(false);
+    navigate("/login");
+  };
+
   return (
     <>
       <HeaderForAuth />
-      <main>
+      <main className="relative">
         {/* Error/Success Messages */}
         {error && (
           <div className="max-w-[546px] mx-auto px-6 mb-4">
@@ -360,7 +365,7 @@ const ForgotPassword = () => {
         </div>
 
         {/* New Password Section */}
-        {isOtpComplete && (
+        {isOtpComplete && !showSuccessModal && (
           <div className="px-6 max-w-[546px] mx-auto flex flex-col gap-6">
             <h1 className="text-center text-5xl mt-4 font-bold">
               New Password
@@ -447,6 +452,31 @@ const ForgotPassword = () => {
                 {loading ? "Resetting..." : "Reset Password"}
               </button>
             </form>
+          </div>
+        )}
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-6">
+            <div className="bg-white w-full max-w-[583px] rounded-xl p-6 shadow-lg">
+              <div className="flex flex-col gap-3 items-center">
+                <div className="flex items-center justify-center rounded-full bg-primary-70 size-16">
+                  <MdCheck className="text-white size-12" />
+                </div>
+                <p className="text-[#1E1E1E] font-semibold text-2xl text-center">
+                  Password Reset Successfully
+                </p>
+                <p className="text-center">
+                  Use this Password when next you want to Log In
+                </p>
+                <button
+                  onClick={handleModalOkay}
+                  className="w-full bg-primary-70 text-white rounded-lg py-3 mt-5 hover:bg-primary-80 transition-colors"
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </main>
