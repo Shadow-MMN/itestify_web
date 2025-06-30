@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import { LuHeart } from "react-icons/lu";
 
-const quotes = Array(6).fill({
+const quotes = Array(12).fill({
   image: "/Rectangle 2.png",
   source: "Southern Living",
 });
