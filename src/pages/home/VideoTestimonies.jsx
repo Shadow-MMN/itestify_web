@@ -7,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const swiperData = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
@@ -29,8 +30,8 @@ const VideoTestimonies = () => {
     <>
       <section className="px-6 pt-6 flex flex-col gap-3 mb-4">
         <div className="flex justify-between items-center">
-          <h1>Video Testimonies</h1>
-          <span>See all</span>
+          <h1 className="text-2xl">Video Testimonies</h1>
+          <Link to="/video-testimonies">See all</Link>
         </div>
       </section>
 

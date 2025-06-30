@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const testimonies = Array(6).fill({
   title: "Jesus Changed my Genotype!",
@@ -28,8 +29,8 @@ const WrittenTestimonies = () => {
     <>
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <h1>Written testimonies</h1>
-          <span>See all</span>
+          <h1 className="text-2xl">Written testimonies</h1>
+          <Link to="/written-testimonies">See all</Link>
         </div>
       </section>
       <Swiper

@@ -4,6 +4,9 @@ import App from "../App";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import ForgotPassword from "../pages/auth/ForgotPassword";
+import VideoTestimoniesPage from "../pages/VideoTestimoniesPage";
+import WrittenTestimoniesPage from "../pages/WrittenTestimoniesPage";
+import InspirationalQuotesPage from "../pages/InspirationalQuotesPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +19,18 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <h1>About Us</h1>,
+      },
+      {
+        path: "video-testimonies",
+        element: <VideoTestimoniesPage />,
+      },
+      {
+        path: "written-testimonies",
+        element: <WrittenTestimoniesPage />,
+      },
+      {
+        path: "inspirational-quotes",
+        element: <InspirationalQuotesPage />,
       },
     ],
   },

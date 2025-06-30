@@ -12,7 +12,7 @@ const ScriptureOfTheDay = () => {
 
   return (
     <section className="p-6 flex flex-col gap-4">
-      <h1>Scripture Of the day</h1>
+      <h1 className="text-2xl">Scripture Of the day</h1>
 
       {loading ? (
         <Skeleton

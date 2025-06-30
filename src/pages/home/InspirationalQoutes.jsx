@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 
 // Import required modules
 import { Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const quotes = Array(6).fill({
   image: "/Rectangle 2.png",
@@ -26,8 +27,8 @@ const InspirationalQoutes = () => {
     <>
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <h1>Inspirational Pictures</h1>
-          <span>See all</span>
+          <h1 className="text-2xl">Inspirational Pictures</h1>
+          <Link to="/inspirational-quotes">See all</Link>
         </div>
       </section>
 
