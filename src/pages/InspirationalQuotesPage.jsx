@@ -24,7 +24,7 @@ const InspirationalQuotesPage = () => {
           return (
             <div className="p-3 flex flex-col gap-3 relative">
               <img src={quote.image} alt="Inspirational Quotes" />
-              <p className="font-thin">Source : {quote.source}</p>
+              <p className="font-bold">Source : {quote.source}</p>
               <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-6 right-8">
                 <LuHeart className="text-[#1E1E1E] w-6 h-6" />
               </div>
