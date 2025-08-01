@@ -1,16 +1,10 @@
 import React from "react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import { MdOutlineSettings } from "react-icons/md";
-import { TfiAngleDown } from "react-icons/tfi";
-import { LuHeart } from "react-icons/lu";
 import { IoSendOutline } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
 import EmojiPicker from "emoji-picker-react";
 import { FaRegCopy } from "react-icons/fa6";
 // import { useParams } from "react-router-dom";
-import { GoDotFill } from "react-icons/go";
-import { BiLike } from "react-icons/bi";
-import { LuShare2 } from "react-icons/lu";
 import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Skeleton from "react-loading-skeleton";
@@ -22,7 +16,7 @@ import VideoComments from "../../../components/Testimonies /Video/VideoComments"
 import VideoCard from "../../../components/Testimonies /Video/VideoCard";
 import { HiOutlineUser } from "react-icons/hi";
 import { GrEmoji } from "react-icons/gr";
-
+import MainVideoDetail from "../../../components/Testimonies /Video/MainVideoDetail";
 const relatedVideoSm = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
   title: "Triplets after 25 years of waiting",
@@ -48,6 +42,14 @@ const videoComments = Array(4).fill({
   dislikes: 0,
   days: 2,
 });
+
+const mainVideo = {
+  video: "/vidoeTestimoniesDetails/mainVideo.mov",
+  title: "Triplets after tweenty five years of waiting!",
+  type: "Childbirth",
+  views: "504",
+  date: "18/6/2024",
+};
 
 const VideoDetails = () => {
   // const params = useParams();
@@ -86,75 +88,10 @@ const VideoDetails = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
           <div className="flex flex-col gap-4">
-            <div className="relative">
-              <video
-                src="/vidoeTestimoniesDetails/mainVideo.mov"
-                className="lg:rounded-lg w-full"
-                controls
-              />
-              <div>
-                <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-2 right-16 lg:right-10">
-                  <LuHeart className="text-[#1E1E1E] w-6 h-6" />
-                </div>
-                <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-2 right-6 lg:hidden">
-                  <MdOutlineSettings className="text-[#1E1E1E] w-6 h-6" />
-                </div>
-                <div className=" w-12 h-12  flex items-center justify-center p-2 absolute top-1 left-6 lg:hidden">
-                  <TfiAngleDown className="text-white w-6 h-6" />
-                </div>
-              </div>
-            </div>
-            <div className="px-8 flex flex-col gap-3">
-              <h2>Triplets after tweenty five years of waiting!</h2>
-              <p className="font-thin flex items-center gap-1 text-sm">
-                Child Birth
-                <span>
-                  <GoDotFill />
-                </span>
-                504 Views
-                <span>
-                  <GoDotFill />
-                </span>
-                18/6/2024
-                <span>
-                  <GoDotFill />
-                </span>
-                <span className="text-primary-70 font-medium">See Details</span>
-              </p>
-              <div className="flex gap-2">
-                <button className="flex gap-1 items-center bg-[#F5F5F5] rounded-3xl p-3">
-                  <BiLike className="size-6" />
-                  <p className="text-lg">30</p>
-                </button>
-                <button
-                  onClick={() => setShowShare(true)}
-                  className="flex gap-1 items-center bg-[#F5F5F5] rounded-3xl p-3"
-                >
-                  <LuShare2 className="size-6" />
-                  <p className="text-lg">Share</p>
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-col px-4 gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-[#9966cc] py-3 px-3 flex items-center justify-center rounded-full">
-                  <img
-                    src="/Logo.png"
-                    alt="Itestify Logo"
-                    className="w-4 h-4"
-                  />
-                </div>
-                <p className="text-xl">iTestified</p>
-              </div>
-              <div className="lg:flex flex-col hidden gap-2 bg-[#F5F5F5] rounded-lg p-4">
-                <h3>Disclaimer</h3>
-                <p>
-                  This video was sourced from YouTube. We do not own the rights
-                  to this video in any form or way. It is posted here for the
-                  purpose of sharing inspiring testimonies with our community
-                </p>
-              </div>
-            </div>
+            <MainVideoDetail
+              mainVideo={mainVideo}
+              setShowShare={setShowShare}
+            />
             {/*Comment Section for sm-md */}
             <div className="flex lg:hidden px-4">
               <div className="flex flex-col gap-2 bg-[#F5F5F5] rounded-lg p-4">
