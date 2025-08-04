@@ -14,7 +14,7 @@ const ShareCard = ({ setShowShare }) => {
         className={`
            w-full max-w-md 
            sm:w-[393px] sm:mx-0
-           bg-white rounded-2xl shadow-2xl
+           bg-white rounded-t-2xl lg:rounded-2xl shadow-2xl
            lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2
            ${
              window.innerWidth >= 1024

@@ -1,11 +1,12 @@
 import { MdOutlineArrowBackIos } from "react-icons/md";
 // import { useParams } from "react-router-dom";
+
 import { useState, useEffect, useRef } from "react";
 import VideoCard from "../../../components/Testimonies /Video/VideoCard";
 import MainVideoDetail from "../../../components/Testimonies /Video/MainVideoDetail";
-import LGCommentSection from "../../../components/Testimonies /Video/LGCommentSection";
+import DesktopCommentSection from "../../../components/Testimonies /Video/DesktopCommentSection";
 import ShareCard from "../../../components/Testimonies /Video/ShareCard";
-import SMCommentSection from "../../../components/Testimonies /Video/SMCommentSection";
+import MobileCommentSection from "../../../components/Testimonies /Video/MobileCommentSection";
 import VideoDisplay from "../../../components/VideoDisplay";
 const relatedVideoSm = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
@@ -15,23 +16,29 @@ const relatedVideoSm = Array(6).fill({
   views: 504,
   date: "18/6/2024",
 });
-const relatedVideolg = Array(8).fill({
-  video: "/vidoeTestimoniesDetails/relatedVideos.mov",
-  title: "Triplets after 25 years of waiting",
-  church: "Redeemed Christian Church Of God",
-  category: "Childbirth",
-  views: 504,
-  date: "18/6/2024",
-});
-const videoComments = Array(4).fill({
-  image: "/commentImage.png",
-  name: "Rotimi Gbenga",
-  testimony:
-    "Our God is indeed a good God, he knows all and can do all things, I will also testify In Jesus name, Amen!",
-  likes: 15,
-  dislikes: 0,
-  days: 2,
-});
+const relatedVideolg = Array(8)
+  .fill(null)
+  .map((_, index) => ({
+    id: index + 1,
+    video: "/vidoeTestimoniesDetails/relatedVideos.mov",
+    title: "Triplets after 25 years of waiting",
+    church: "Redeemed Christian Church Of God",
+    category: "Childbirth",
+    views: 504,
+    date: "18/6/2024",
+  }));
+const videoComments = Array(6)
+  .fill(null)
+  .map((_, index) => ({
+    id: index + 1,
+    image: "/commentImage.png",
+    name: "Rotimi Gbenga",
+    testimony:
+      "Our God is indeed a good God, he knows all and can do all things, I will also testify In Jesus name, Amen!",
+    likes: 15,
+    dislikes: 0,
+    days: 2,
+  }));
 
 const mainVideo = {
   video: "/vidoeTestimoniesDetails/mainVideo.mov",
@@ -56,6 +63,7 @@ const VideoDetails = () => {
     const timeout = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timeout);
   }, []);
+
   useEffect(() => {
     inputRef.current?.focus();
   }, [showCommentSection]);
@@ -93,7 +101,7 @@ const VideoDetails = () => {
                     <img
                       src="/commentImage.png"
                       alt=""
-                      className="rounded-full size-12 "
+                      className="rounded-full size-12"
                     />
                     <p>
                       Our God is indeed a good God, he knows all and ...{" "}
@@ -109,7 +117,7 @@ const VideoDetails = () => {
               </div>
             </div>
             {/*Comment section for lg */}
-            <LGCommentSection
+            <DesktopCommentSection
               videoComments={videoComments}
               value={value}
               setValue={setValue}
@@ -135,14 +143,14 @@ const VideoDetails = () => {
           <div className="hidden lg:flex flex-col gap-2">
             <h2 className="px-6 text-xl font-semibold">Related Videos</h2>
             {relatedVideolg.map((item) => {
-              return <VideoCard item={item} />;
+              return <VideoCard item={item} key={item.id} />;
             })}
           </div>
         </div>
         {showShare && <ShareCard setShowShare={setShowShare} />}
       </div>
       {showCommentSection && (
-        <SMCommentSection
+        <MobileCommentSection
           setShowCommentSection={setShowCommentSection}
           videoComments={videoComments}
           inputRef={inputRef}
