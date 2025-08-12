@@ -24,7 +24,7 @@ const SignUp = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [infoMessage, setInfoMessage] = useState("");
-  const [isRequestingOtp, setIsRequestingOtp] = useState(false); // New state for OTP loading
+  const [isRequestingOtp, setIsRequestingOtp] = useState(false);
 
   useEffect(() => {
     if (infoMessage) {

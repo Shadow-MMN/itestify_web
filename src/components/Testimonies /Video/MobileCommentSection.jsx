@@ -14,7 +14,9 @@ const MobileCommentSection = ({
 }) => {
   const [showReply, setShowReplyComment] = useState(false);
   const [replyComment, setReplyComment] = useState(null);
-
+  const handleCommenting = () => {
+    setValue("");
+  };
   const handleReply = (id) => {
     // Convert string ID to number for comparison
     const numericId = parseInt(id, 10);
@@ -52,9 +54,7 @@ const MobileCommentSection = ({
           ) : (
             <div className="w-6" />
           )}
-          <h2 className="text-center font-bold text-2xl flex-1">
-            {showReply ? "Reply" : "Comments"}
-          </h2>
+          <h2 className="text-center font-bold text-2xl flex-1">Comments</h2>
           {showReply ? (
             <div className="w-6" />
           ) : (
@@ -86,12 +86,13 @@ const MobileCommentSection = ({
           <input
             ref={inputRef}
             type="text"
-            placeholder={showReply ? "Add a reply..." : "Add a comment"}
+            placeholder="Add a comment"
             className="bg-[#F5F5F5] p-4 text-lg mx-4 flex-1 rounded-lg placeholder:text-[#9A9A9A] focus:outline-none"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
           <button
+            onClick={handleCommenting}
             disabled={!value.trim()}
             className={`flex gap-2 items-center rounded-xl p-4 text-white ${
               value.trim() ? "bg-primary-70" : "bg-[#787878] cursor-not-allowed"

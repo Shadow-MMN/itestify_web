@@ -3,12 +3,12 @@ import Home from "../pages/page/Home";
 import App from "../App";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
-import ForgotPassword from "../pages/auth/ForgotPassword";
+import ForgotPassword from "../pages/auth/ForgotPassword/ForgotPassword";
 import Videos from "../pages/Testimonies/Videos/Videos";
 import VideoDetails from "../pages/Testimonies/Videos/VideoDetail";
 import Texts from "../pages/Testimonies/Text/Texts";
-
 import InspirationalPics from "../pages/page/InspirationalPics";
+
 const router = createBrowserRouter([
   {
     path: "/",

@@ -8,6 +8,7 @@ import DesktopCommentSection from "../../../components/Testimonies /Video/Deskto
 import ShareCard from "../../../components/Testimonies /Video/ShareCard";
 import MobileCommentSection from "../../../components/Testimonies /Video/MobileCommentSection";
 import VideoDisplay from "../../../components/VideoDisplay";
+import VideoDescription from "../../../components/Testimonies /Video/VideoDescription";
 const relatedVideoSm = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
   title: "Triplets after 25 years of waiting",
@@ -57,6 +58,7 @@ const VideoDetails = () => {
   const [showCommentSection, setShowCommentSection] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -89,6 +91,7 @@ const VideoDetails = () => {
             <MainVideoDetail
               mainVideo={mainVideo}
               setShowShare={setShowShare}
+              setShowDescription={setShowDescription}
             />
             {/*Comment Section for sm-md */}
             <div className="flex lg:hidden px-4">
@@ -148,6 +151,9 @@ const VideoDetails = () => {
           </div>
         </div>
         {showShare && <ShareCard setShowShare={setShowShare} />}
+        {showDescription && (
+          <VideoDescription setShowDescription={setShowDescription} />
+        )}
       </div>
       {showCommentSection && (
         <MobileCommentSection

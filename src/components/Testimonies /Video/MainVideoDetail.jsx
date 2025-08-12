@@ -4,7 +4,7 @@ import { LuShare2 } from "react-icons/lu";
 import { MdOutlineSettings } from "react-icons/md";
 import { TfiAngleDown } from "react-icons/tfi";
 import { LuHeart } from "react-icons/lu";
-const MainVideoDetail = ({ setShowShare, mainVideo }) => {
+const MainVideoDetail = ({ setShowShare, mainVideo, setShowDescription }) => {
   return (
     <div className="flex flex-col gap-4">
       {/* Main Video Testimony Video */}
@@ -29,21 +29,28 @@ const MainVideoDetail = ({ setShowShare, mainVideo }) => {
       {/* Main Video testimony details */}
       <div className="px-8 flex flex-col gap-3">
         <h2 className="font-bold text-xl">{mainVideo.title}</h2>
-        <p className="font-thin flex items-center gap-1 text-sm">
-          {mainVideo.type}
-          <span>
-            <GoDotFill />
-          </span>
-          {mainVideo.views} Views
-          <span>
-            <GoDotFill />
-          </span>
-          {mainVideo.date}
-          <span>
-            <GoDotFill />
-          </span>
-          <span className="text-primary-70 font-medium">See Details</span>
-        </p>
+        <div className="flex items-center gap-1 text-nowrap">
+          <p className="font-thin flex items-center gap-1 text-sm">
+            {mainVideo.type}
+            <span>
+              <GoDotFill />
+            </span>
+            {mainVideo.views} Views
+            <span>
+              <GoDotFill />
+            </span>
+            {mainVideo.date}
+            <span>
+              <GoDotFill />
+            </span>
+          </p>
+          <button
+            onClick={() => setShowDescription(true)}
+            className="text-primary-70 font-medium text-sm lg:hidden"
+          >
+            See Details
+          </button>
+        </div>
         <div className="flex gap-2">
           <button className="flex gap-1 items-center bg-[#F5F5F5] rounded-3xl p-3">
             <BiLike className="size-6" />
