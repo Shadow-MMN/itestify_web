@@ -1,9 +1,9 @@
-import VideoComments from "./VideoComments";
 import { IoSendOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 import { GrEmoji } from "react-icons/gr";
 import EmojiPicker from "emoji-picker-react";
-const DesktopCommentSection = ({
+import CommentCard from "../../comments/CommentCard";
+const DesktopVideoCommentSection = ({
   videoComments,
   value,
   setValue,
@@ -75,11 +75,11 @@ const DesktopCommentSection = ({
       {/* Mapping will be done here , maybe a comment card will be created for lg */}
       <div className="flex flex-col gap-6 mb-6">
         {videoComments.map((item) => {
-          return <VideoComments item={item} key={item.id} />;
+          return <CommentCard item={item} key={item.id} />;
         })}
       </div>
     </div>
   );
 };
 
-export default DesktopCommentSection;
+export default DesktopVideoCommentSection;

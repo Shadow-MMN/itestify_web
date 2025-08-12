@@ -5,7 +5,7 @@ import { BiDislike } from "react-icons/bi";
 import { GrEmoji } from "react-icons/gr";
 import { IoSendOutline } from "react-icons/io5";
 
-const VideoComments = ({ item, onReply }) => {
+const CommentCard = ({ item, onReply }) => {
   const [isReply, setIsReply] = useState(false);
   const [value, setValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -124,4 +124,4 @@ const VideoComments = ({ item, onReply }) => {
   );
 };
 
-export default VideoComments;
+export default CommentCard;

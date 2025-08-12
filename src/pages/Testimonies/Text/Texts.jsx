@@ -2,7 +2,8 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 import TextCard from "../../../components/Testimonies /Text/TextCard";
 
-const testimonies = Array(18).fill({
+const testimonies = Array.from({ length: 18 }, (_, index) => ({
+  id: index + 1,
   title: "Jesus Changed my Genotype!",
   excerpt:
     "For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospital visits and painful crises became a part of my life. My faith in...",
@@ -10,7 +11,7 @@ const testimonies = Array(18).fill({
   category: "Healing",
   time: "30 Minutes ago",
   avatar: "/Ellipse 5.png",
-});
+}));
 const TextTestimonies = () => {
   return (
     <div className="min-h-screen px-4 md:px-12 flex flex-col gap-2 md:gap-4">

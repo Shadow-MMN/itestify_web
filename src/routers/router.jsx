@@ -8,7 +8,7 @@ import Videos from "../pages/Testimonies/Videos/Videos";
 import VideoDetails from "../pages/Testimonies/Videos/VideoDetail";
 import Texts from "../pages/Testimonies/Text/Texts";
 import InspirationalPics from "../pages/page/InspirationalPics";
-
+import TextDetails from "../pages/Testimonies/Text/TextDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,8 +31,12 @@ const router = createBrowserRouter([
         element: <VideoDetails />,
       },
       {
-        path: "written-testimonies",
+        path: "text-testimonies",
         element: <Texts />,
+      },
+      {
+        path: "text-testimonies/:textId",
+        element: <TextDetails />,
       },
       {
         path: "inspirational-quotes",

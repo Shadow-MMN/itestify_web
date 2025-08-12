@@ -1,8 +1,12 @@
 import { LuHeart } from "react-icons/lu";
 import { GoDotFill } from "react-icons/go";
+import { Link } from "react-router-dom";
 const TextCard = ({ item }) => {
   return (
-    <div className="bg-[#F5F5F5] rounded-xl p-3 flex flex-col gap-3 relative">
+    <Link
+      to={`/text-testimonies/${item.id}`}
+      className="bg-[#F5F5F5] rounded-xl p-3 flex flex-col gap-3 relative"
+    >
       <h2>{item.title}</h2>
       <p className="font-thin">
         {item.excerpt}
@@ -24,7 +28,7 @@ const TextCard = ({ item }) => {
       <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-2 right-4">
         <LuHeart className="text-[#1E1E1E] w-6 h-6" />
       </div>
-    </div>
+    </Link>
   );
 };
 

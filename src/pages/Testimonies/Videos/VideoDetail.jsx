@@ -4,11 +4,11 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useState, useEffect, useRef } from "react";
 import VideoCard from "../../../components/Testimonies /Video/VideoCard";
 import MainVideoDetail from "../../../components/Testimonies /Video/MainVideoDetail";
-import DesktopCommentSection from "../../../components/Testimonies /Video/DesktopCommentSection";
-import ShareCard from "../../../components/Testimonies /Video/ShareCard";
-import MobileCommentSection from "../../../components/Testimonies /Video/MobileCommentSection";
+import DesktopVideoCommentSection from "../../../components/Testimonies /Video/DesktopVideoCommentSection";
+import MobileCommentSection from "../../../components/comments/MobileCommentSection";
 import VideoDisplay from "../../../components/VideoDisplay";
 import VideoDescription from "../../../components/Testimonies /Video/VideoDescription";
+import ShareCard from "../../../components/ShareCard";
 const relatedVideoSm = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
   title: "Triplets after 25 years of waiting",
@@ -120,7 +120,7 @@ const VideoDetails = () => {
               </div>
             </div>
             {/*Comment section for lg */}
-            <DesktopCommentSection
+            <DesktopVideoCommentSection
               videoComments={videoComments}
               value={value}
               setValue={setValue}
@@ -158,7 +158,7 @@ const VideoDetails = () => {
       {showCommentSection && (
         <MobileCommentSection
           setShowCommentSection={setShowCommentSection}
-          videoComments={videoComments}
+          comments={videoComments}
           inputRef={inputRef}
           value={value}
           setValue={setValue}

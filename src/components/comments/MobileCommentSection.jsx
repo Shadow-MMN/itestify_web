@@ -1,4 +1,4 @@
-import VideoComments from "./VideoComments";
+import CommentCard from "./CommentCard";
 import { IoSendOutline } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -7,7 +7,7 @@ import MobileReplySection from "./MobileReplySection";
 
 const MobileCommentSection = ({
   setShowCommentSection,
-  videoComments,
+  comments,
   inputRef,
   value,
   setValue,
@@ -32,7 +32,7 @@ const MobileCommentSection = ({
 
   // Find the comment safely
   const comment = replyComment
-    ? videoComments.find((item) => item.id === replyComment)
+    ? comments.find((item) => item.id === replyComment)
     : null;
 
   return (
@@ -70,12 +70,8 @@ const MobileCommentSection = ({
         {/* Scrollable Comments Section */}
         <div className="flex-1 overflow-y-auto px-4 pt-4 pb-28">
           {!showReply
-            ? videoComments.map((item) => (
-                <VideoComments
-                  key={item.id}
-                  item={item}
-                  onReply={handleReply}
-                />
+            ? comments.map((item) => (
+                <CommentCard key={item.id} item={item} onReply={handleReply} />
               ))
             : comment && <MobileReplySection item={comment} />}
         </div>

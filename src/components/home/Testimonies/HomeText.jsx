@@ -5,7 +5,8 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
 import TextCard from "../../Testimonies /Text/TextCard";
-const testimonies = Array(6).fill({
+const testimonies = Array.from({ length: 6 }, (_, index) => ({
+  id: index + 1,
   title: "Jesus Changed my Genotype!",
   excerpt:
     "For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospital visits and painful crises became a part of my life. My faith in...",
@@ -13,7 +14,7 @@ const testimonies = Array(6).fill({
   category: "Healing",
   time: "30 Minutes ago",
   avatar: "/Ellipse 5.png",
-});
+}));
 
 const HomeTexts = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const HomeTexts = () => {
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl">Written testimonies</h1>
-          <Link to="/written-testimonies">See all</Link>
+          <Link to="/text-testimonies">See all</Link>
         </div>
       </section>
       <Swiper
