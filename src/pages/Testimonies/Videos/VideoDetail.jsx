@@ -9,6 +9,7 @@ import MobileCommentSection from "../../../components/comments/MobileCommentSect
 import VideoDisplay from "../../../components/VideoDisplay";
 import VideoDescription from "../../../components/Testimonies /Video/VideoDescription";
 import ShareCard from "../../../components/ShareCard";
+import { Link } from "react-router-dom";
 const relatedVideoSm = Array(6).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
   title: "Triplets after 25 years of waiting",
@@ -83,9 +84,9 @@ const VideoDetails = () => {
   return (
     <>
       <div className={`flex flex-col gap-4 lg:px-20`}>
-        <div className="hidden md:block">
+        <Link to={-1} className="hidden md:block">
           <MdOutlineArrowBackIos className="size-6 text-black" />
-        </div>
+        </Link>
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
           <div className="flex flex-col gap-4">
             <MainVideoDetail
