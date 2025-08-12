@@ -1,11 +1,8 @@
-import { FaRegCopy } from "react-icons/fa6";
-import { ImCancelCircle } from "react-icons/im";
-
 const testimonyDescription = [
-  { name: "Likes", number: 30 },
-  { name: "Views", number: 504 },
-  { name: 2024, number: "3 Jul" },
-  { name: "Category", number: "Childbirth" },
+  { id: 1, name: "Likes", number: 30 },
+  { id: 2, name: "Views", number: 504 },
+  { id: 3, name: 2024, number: "3 Jul" },
+  { id: 4, name: "Category", number: "Childbirth" },
 ];
 const VideoDescription = ({ setShowDescription }) => {
   return (
@@ -65,7 +62,10 @@ const VideoDescription = ({ setShowDescription }) => {
           <div className="flex justify-between px-8 items-center">
             {testimonyDescription.map((testimony) => {
               return (
-                <div className="flex flex-col items-center gap-2">
+                <div
+                  key={testimony.id}
+                  className="flex flex-col items-center gap-2"
+                >
                   <p className="font-medium text-lg">{testimony.number}</p>
                   <span>{testimony.name}</span>
                 </div>

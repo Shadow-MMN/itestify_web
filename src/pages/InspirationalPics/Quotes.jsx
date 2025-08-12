@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import { LuHeart } from "react-icons/lu";
 
-const quotes = Array(12).fill({
+const quotes = Array.from({ length: 12 }, (_, i) => ({
+  id: i + 1,
   image: "/Rectangle 2.png",
   source: "Southern Living",
-});
+}));
 
-const InspirationalPics = () => {
+const Quotes = () => {
   return (
     <div className="min-h-screen px-4 md:px-12 flex flex-col gap-2 md:gap-4">
       <Link to={-1} className="flex items-center gap-4 md:gap-8">
@@ -22,13 +23,16 @@ const InspirationalPics = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {quotes.map((quote) => {
           return (
-            <div className="p-3 flex flex-col gap-3 relative">
+            <Link
+              to={`${quote.id}`}
+              className="p-3 flex flex-col gap-3 relative"
+            >
               <img src={quote.image} alt="Inspirational Quotes" />
               <p className="font-bold">Source : {quote.source}</p>
               <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-6 right-8">
                 <LuHeart className="text-[#1E1E1E] w-6 h-6" />
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
@@ -39,4 +43,4 @@ const InspirationalPics = () => {
   );
 };
 
-export default InspirationalPics;
+export default Quotes;

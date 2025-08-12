@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/page/Home";
+import Home from "../pages/Home/Home";
 import App from "../App";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
@@ -7,8 +7,11 @@ import ForgotPassword from "../pages/auth/ForgotPassword/ForgotPassword";
 import Videos from "../pages/Testimonies/Videos/Videos";
 import VideoDetails from "../pages/Testimonies/Videos/VideoDetail";
 import Texts from "../pages/Testimonies/Text/Texts";
-import InspirationalPics from "../pages/page/InspirationalPics";
+import Quotes from "../pages/InspirationalPics/Quotes";
 import TextDetails from "../pages/Testimonies/Text/TextDetails";
+import QuoteDetails from "../pages/InspirationalPics/QuoteDetails";
+import Category from "../pages/Category/Category";
+import CategoryDetail from "../pages/Category/CategoryDetail";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +24,14 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <h1>About Us</h1>,
+      },
+      {
+        path: "category",
+        element: <Category />,
+      },
+      {
+        path: "category/:categoryId",
+        element: <CategoryDetail />,
       },
       {
         path: "video-testimonies",
@@ -39,8 +50,12 @@ const router = createBrowserRouter([
         element: <TextDetails />,
       },
       {
-        path: "inspirational-quotes",
-        element: <InspirationalPics />,
+        path: "quotes",
+        element: <Quotes />,
+      },
+      {
+        path: "quotes/:quoteId",
+        element: <QuoteDetails />,
       },
     ],
   },

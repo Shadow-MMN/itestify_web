@@ -1,5 +1,5 @@
 import Scripture from "../../components/home/Scripture";
-import HomeInspirationalPics from "../../components/home/HomeInspirationalPics";
+import HomeQuote from "../../components/home/HomeQuote";
 import HomeVideos from "../../components/home/Testimonies/HomeVideos";
 import HomeText from "../../components/home/Testimonies/HomeText";
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
       <Scripture />
       <HomeVideos />
       <HomeText />
-      <HomeInspirationalPics />
+      <HomeQuote />
     </>
   );
 };

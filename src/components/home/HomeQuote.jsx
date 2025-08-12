@@ -10,12 +10,13 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
 
-const quotes = Array(6).fill({
+const quotes = Array.from({ length: 6 }, (_, i) => ({
+  id: i + 1,
   image: "/Rectangle 2.png",
   source: "Southern Living",
-});
+}));
 
-const HomeInspirationalPics = () => {
+const HomeQuote = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const HomeInspirationalPics = () => {
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl">Inspirational Pictures</h1>
-          <Link to="/inspirational-quotes">See all</Link>
+          <Link to="/quotes">See all</Link>
         </div>
       </section>
 
@@ -60,13 +61,16 @@ const HomeInspirationalPics = () => {
                 style={{ backgroundColor: "#D9D9D9" }}
               ></div>
             ) : (
-              <div className="p-3 flex flex-col gap-3 relative">
+              <Link
+                to={`quotes/${quote.id}`}
+                className="p-3 flex flex-col gap-3 relative"
+              >
                 <img src={quote.image} alt="Inspirational Quotes" />
                 <p className="font-bold">Source : {quote.source}</p>
                 <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center p-2 absolute top-6 right-8">
                   <LuHeart className="text-[#1E1E1E] w-6 h-6" />
                 </div>
-              </div>
+              </Link>
             )}
           </SwiperSlide>
         ))}
@@ -75,4 +79,4 @@ const HomeInspirationalPics = () => {
   );
 };
 
-export default HomeInspirationalPics;
+export default HomeQuote;
