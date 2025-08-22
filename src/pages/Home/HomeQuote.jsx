@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LuHeart } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { LiaAngleRightSolid } from "react-icons/lia";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -29,7 +29,10 @@ const HomeQuote = () => {
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl">Inspirational Pictures</h1>
-          <Link to="/quotes">See all</Link>
+          <Link to="/quotes" className="flex items-center gap-1">
+            <span className="text-lg font-semibold">See all</span>
+            <LiaAngleRightSolid className="text-[#1E1E1E] size-4" />
+          </Link>
         </div>
       </section>
 

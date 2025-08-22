@@ -6,9 +6,9 @@ import { AiOutlineLike } from "react-icons/ai";
 import { LuShare2 } from "react-icons/lu";
 import { BsChatRightText } from "react-icons/bs";
 import { useRef, useState } from "react";
-import ShareCard from "../../../components/ShareCard";
-import MobileCommentSection from "../../../components/comments/MobileCommentSection";
-import DesktopTextCommentSection from "../../../components/Testimonies /Text/DesktopTextCommentSection";
+import ShareCard from "../../components/ShareCard";
+import MobileCommentSection from "../../components/comments/MobileCommentSection";
+import DesktopTextCommentSection from "./DesktopTextCommentSection";
 const textComments = Array(6)
   .fill(null)
   .map((_, index) => ({

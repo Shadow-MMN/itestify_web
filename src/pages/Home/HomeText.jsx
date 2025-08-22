@@ -4,7 +4,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
-import TextCard from "../../Testimonies /Text/TextCard";
+import TextCard from "../../components/TextCard";
+import { LiaAngleRightSolid } from "react-icons/lia";
 const testimonies = Array.from({ length: 6 }, (_, index) => ({
   id: index + 1,
   title: "Jesus Changed my Genotype!",
@@ -29,7 +30,10 @@ const HomeTexts = () => {
       <section className="px-6 py-6 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl">Written testimonies</h1>
-          <Link to="/text-testimonies">See all</Link>
+          <Link to="/text-testimonies" className="flex items-center gap-1">
+            <span className="text-lg font-semibold">See all</span>
+            <LiaAngleRightSolid className="text-[#1E1E1E] size-4" />
+          </Link>
         </div>
       </section>
       <Swiper

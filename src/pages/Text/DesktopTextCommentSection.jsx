@@ -1,7 +1,7 @@
 import EmojiPicker from "emoji-picker-react";
 import { GrEmoji } from "react-icons/gr";
 import { IoSendOutline } from "react-icons/io5";
-import CommentCard from "../../comments/CommentCard";
+import CommentCard from "../../components/comments/CommentCard";
 import { HiOutlineUser } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 const DesktopTextCommentSection = ({

@@ -2,7 +2,7 @@ import { IoSendOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 import { GrEmoji } from "react-icons/gr";
 import EmojiPicker from "emoji-picker-react";
-import CommentCard from "../../comments/CommentCard";
+import CommentCard from "../../components/comments/CommentCard";
 const DesktopVideoCommentSection = ({
   videoComments,
   value,

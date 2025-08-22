@@ -5,12 +5,15 @@ import ForgotPasswordForm from "./ForgotPasswordForm";
 import ResetPassword from "./ResetPassword";
 import NewPassword from "./NewPassword";
 import SuccessModal from "./SuccessModal";
+import getBaseUrl from "../../../utils/baseURL";
+import axios from "axios";
 const ForgotPassword = () => {
   const timer = 300; // 5 minutes for OTP validity
   const [countDown, setCountDown] = useState(timer);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // showOtp: Controls whether the OTP input and related UI are shown. Set to true after successful OTP request in handleFormSubmitForEmail. Used in ForgotPasswordForm and ResetPassword components.
   const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOtpComplete, setIsOtpComplete] = useState(false);
@@ -21,13 +24,7 @@ const ForgotPassword = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
-  const formatTime = (time) => {
-    const minutes = String(Math.floor(time / 60)).padStart(2, "0");
-    const seconds = String(time % 60).padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  };
-
-  // Auto-hide success messages after 5 seconds
+  // useEffect: Auto-hide success messages after 1 second. Used for temporary feedback after actions like OTP sent/verified. Used in the main render for showing success messages.
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
@@ -38,6 +35,7 @@ const ForgotPassword = () => {
     }
   }, [success]);
 
+  // useEffect: Handles OTP countdown timer when showOtp is true. Used for OTP validity and resend logic in ResetPassword component.
   useEffect(() => {
     if (showOtp) {
       if (countDown > 0) {
@@ -50,42 +48,40 @@ const ForgotPassword = () => {
     }
   }, [countDown, showOtp]);
 
+  // handleEmailInput: Updates email state and clears error. Used as onChange handler for email input in ForgotPasswordForm.
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
     setError(""); // Clear error when user starts typing
   };
 
+  // handlePasswordInput: Updates password state and clears error. Used as onChange handler for password input in NewPassword.
   const handlePasswordInput = (e) => {
     setPassword(e.target.value);
     setError("");
   };
 
+  // handleConfirmPasswordInput: Updates confirmPassword state and clears error. Used as onChange handler for confirm password input in NewPassword.
   const handleConfirmPasswordInput = (e) => {
     setConfirmPassword(e.target.value);
     setError("");
   };
 
+  // handleFormSubmitForEmail: Handles submitting the email to request OTP. Sets showOtp to true on success. Used as onSubmit handler in ForgotPasswordForm.
   const handleFormSubmitForEmail = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/password-reset-otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
+      const response = await axios.post(
+        `${getBaseUrl()}/auths/password-reset-otp`,
+        { email }
       );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
-        setShowOtp(true);
+      if (response.status === 200) {
+        setShowOtp(true); // showOtp set to true here after successful OTP request
         setCountDown(timer); // Reset countdown
         setSuccess("OTP sent successfully to your email!");
       } else {
@@ -99,25 +95,20 @@ const ForgotPassword = () => {
     }
   };
 
+  // handleResendEmail: Handles resending the OTP email. Used as onClick handler for resend button in ResetPassword.
   const handleResendEmail = async () => {
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/password-reset-otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
+      const response = await axios.post(
+        `${getBaseUrl()}/auths/password-reset-otp`,
+        { email }
       );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
+      if (response.status === 200) {
         setCountDown(timer);
         setSuccess("OTP resent successfully!");
       } else {
@@ -131,28 +122,20 @@ const ForgotPassword = () => {
     }
   };
 
+  // onOtpSubmit: Handles OTP verification. Sets isOtpComplete to true on success. Used as onSubmit handler for OTP input in ResetPassword.
   const onOtpSubmit = async (otp) => {
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/verify-otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            otp: otp.toString(),
-          }),
-        }
-      );
+      const response = await axios.post(`${getBaseUrl()}/auths/verify-otp`, {
+        email,
+        otp: otp.toString(),
+      });
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
+      if (response.status === 200) {
         setSuccess("OTP verified successfully!");
         setTimeout(() => {
           setLoading(false);
@@ -169,6 +152,7 @@ const ForgotPassword = () => {
     }
   };
 
+  // handlePasswordReset: Handles password reset form submission. Shows success modal on success. Used as onSubmit handler in NewPassword.
   const handlePasswordReset = async (e) => {
     e.preventDefault();
 
@@ -187,24 +171,18 @@ const ForgotPassword = () => {
     setError("");
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/reset-password",
+      const response = await axios.post(
+        `${getBaseUrl()}/auths/reset-password`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            password2: confirmPassword,
-          }),
+          email,
+          password,
+          password2: confirmPassword,
         }
       );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
+      if (response.status === 200) {
         // Show modal instead of success message
         setShowSuccessModal(true);
       } else {
@@ -218,6 +196,7 @@ const ForgotPassword = () => {
     }
   };
 
+  // handleModalOkay: Handles closing the success modal and navigating to login. Used as onClick handler in SuccessModal.
   const handleModalOkay = () => {
     setShowSuccessModal(false);
     navigate("/login");
@@ -261,7 +240,6 @@ const ForgotPassword = () => {
           email={email}
           onOtpSubmit={onOtpSubmit}
           countDown={countDown}
-          formatTime={formatTime}
           handleResendEmail={handleResendEmail}
         />
 

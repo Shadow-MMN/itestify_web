@@ -1,6 +1,7 @@
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import VideoCard from "../../../components/Testimonies /Video/VideoCard";
+import VideoCard from "../../components/VideoCard";
+
 const testimonies = Array(12).fill({
   video: "/Screen Recording 2025-06-04 at 11.48.58 PM.mov",
   title: "Triplets after 25 years of waiting",

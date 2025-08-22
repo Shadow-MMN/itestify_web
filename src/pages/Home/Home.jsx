@@ -1,7 +1,7 @@
-import Scripture from "../../components/home/Scripture";
-import HomeQuote from "../../components/home/HomeQuote";
-import HomeVideos from "../../components/home/Testimonies/HomeVideos";
-import HomeText from "../../components/home/Testimonies/HomeText";
+import Scripture from "./Scripture";
+import HomeQuote from "./HomeQuote";
+import HomeVideos from "./HomeVideos";
+import HomeText from "./HomeText";
 const Home = () => {
   return (
     <>

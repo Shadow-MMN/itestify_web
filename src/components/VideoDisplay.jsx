@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import VideoCard from "./Testimonies /Video/VideoCard";
+import VideoCard from "./VideoCard";
 const VideoDisplay = ({ data, loading, ml, oneColumn }) => {
   return (
     <>

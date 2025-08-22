@@ -3,9 +3,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdLockOutline, MdOutlineMailOutline } from "react-icons/md";
 import { FiAlertCircle } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import HeaderForAuth from "../../components/HeaderForAuth";
+import HeaderForAuth from "../../../components/HeaderForAuth";
+import getBaseUrl from "../../../utils/baseURL";
+import { useAuth } from "../../../context/AuthContext";
+import axios from "axios";
 
 const Login = () => {
+  const { signInWithGoogle } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -60,23 +64,17 @@ const Login = () => {
     setErrors({ email: "", password: "" });
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/login/password/",
+      const response = await axios.post(
+        `${getBaseUrl()}/auths/login/password/`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
+          email: formData.email,
+          password: formData.password,
         }
       );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
+      if (response.status === 200) {
         // Handle successful login - store user data in localStorage
         const userData = {
           name: data.data.full_name,
@@ -123,10 +121,18 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Placeholder function for Google login
-    console.log("Google login clicked");
-    alert("Google login functionality will be implemented soon!");
+  const handleGoogleLogin = async () => {
+    try {
+      const data = await signInWithGoogle();
+      const tokenId = data.user.getIdToken();
+      navigate("/");
+      const response = await axios.post(`${getBaseUrl()}/auths/google-login/`, {
+        id_token: tokenId,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to sign up with Google", error);
+    }
   };
 
   const handleAppleLogin = () => {

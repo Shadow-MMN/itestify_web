@@ -1,4 +1,3 @@
-import React from "react";
 import { LuHeart } from "react-icons/lu";
 const HeartBubble = ({ className }) => {
   return (

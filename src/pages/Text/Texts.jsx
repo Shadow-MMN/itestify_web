@@ -1,6 +1,6 @@
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import TextCard from "../../../components/Testimonies /Text/TextCard";
+import TextCard from "../../components/TextCard";
 
 const testimonies = Array.from({ length: 18 }, (_, index) => ({
   id: index + 1,

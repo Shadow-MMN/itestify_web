@@ -5,7 +5,12 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { MdLockOutline } from "react-icons/md";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
-import HeaderForAuth from "../../components/HeaderForAuth";
+import HeaderForAuth from "../src/components/HeaderForAuth";
+import getBaseUrl from "../src/utils/baseURL";
+import { useAuth } from "../src/context/AuthContext";
+import { formatTime } from "../src/utils/formatTime";
+import { isValidEmail } from "../src/utils/isValidEmail";
+import axios from "axios";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +30,9 @@ const SignUp = () => {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [infoMessage, setInfoMessage] = useState("");
   const [isRequestingOtp, setIsRequestingOtp] = useState(false);
+  const { signInWithGoogle } = useAuth();
 
+  // useEffect: Clears infoMessage after 2 seconds when it changes. Used for showing temporary feedback messages at the top of the form.
   useEffect(() => {
     if (infoMessage) {
       const timeout = setTimeout(() => setInfoMessage(""), 2000);
@@ -34,17 +41,8 @@ const SignUp = () => {
   }, [infoMessage]);
 
   const navigate = useNavigate();
-  const formatTime = (time) => {
-    const minutes = String(Math.floor(time / 60)).padStart(2, "0");
-    const seconds = String(time % 60).padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  };
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
+  // useEffect: Enables/disables the "Request OTP" button based on input validity and timer state. Used for OTP request button logic.
   useEffect(() => {
     if (!timerActive) {
       setDisabledSendOtp(
@@ -54,6 +52,7 @@ const SignUp = () => {
     }
   }, [nameValue, emailValue, timerActive, isRequestingOtp]);
 
+  // useEffect: Enables/disables the "Create an account" button based on all field validations. Used for submit button logic.
   useEffect(() => {
     const allFieldsFilled =
       nameValue.trim() &&
@@ -67,6 +66,7 @@ const SignUp = () => {
     setDisabledCreateAccount(!allFieldsFilled);
   }, [nameValue, emailValue, passwordValue, confirmPasswordValue, otpValue]);
 
+  // useEffect: Checks if password and confirm password match, sets passwordMismatch state. Used for password validation feedback.
   useEffect(() => {
     if (confirmPasswordValue.trim() && passwordValue.trim()) {
       setPasswordMismatch(passwordValue !== confirmPasswordValue);
@@ -75,6 +75,7 @@ const SignUp = () => {
     }
   }, [passwordValue, confirmPasswordValue]);
 
+  // useEffect: Handles OTP resend timer countdown and re-enables OTP button when timer ends. Used for OTP resend logic.
   useEffect(() => {
     if (!timerActive) return;
     if (countDown > 0) {
@@ -88,36 +89,26 @@ const SignUp = () => {
     setCountDown(timerDuration);
   }, [countDown, timerActive, nameValue, emailValue, isRequestingOtp]);
 
+  // handleSendOtp: Sends or resends OTP to the user's email. Used as onClick handler for the OTP button.
   const handleSendOtp = async () => {
     setDisabledSendOtp(true);
     setIsRequestingOtp(true); // Start loading state
 
     try {
       const apiUrl = otpSent
-        ? "https://itestify-backend-38u1.onrender.com/auths/resend-email-verification-token"
-        : "https://itestify-backend-38u1.onrender.com/auths/send-otp/";
+        ? `${getBaseUrl()}/auths/resend-email-verification-token`
+        : `${getBaseUrl()}/auths/send-otp/`;
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: emailValue,
-        }),
+      const response = await axios.post(apiUrl, {
+        email: emailValue,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message ||
-            `Failed to ${otpSent ? "resend" : "send"} verification code`
-        );
-      }
+      console.log(
+        `Verification code ${otpSent ? "resent" : "sent"}:`,
+        response.data
+      );
 
-      const data = await response.json();
-      console.log(`Verification code ${otpSent ? "resent" : "sent"}:`, data);
-
+      // otpSent is set to true here after successful OTP send/resend
       setOtpSent(true);
       setInfoMessage(
         `Verification code ${otpSent ? "resent" : "sent"} to your email`
@@ -128,45 +119,36 @@ const SignUp = () => {
       setTimerActive(false);
       setDisabledSendOtp(!(nameValue.trim() && isValidEmail(emailValue)));
       setCountDown(timerDuration);
+
+      const errorMessage =
+        error.response?.data?.message ||
+        `Failed to ${otpSent ? "resend" : "send"} verification code`;
+
       setInfoMessage(
-        `Failed to ${otpSent ? "resend" : "send"} verification code: ${
-          error.message
-        }`
+        `Failed to ${
+          otpSent ? "resend" : "send"
+        } verification code: ${errorMessage}`
       );
     } finally {
       setIsRequestingOtp(false); // End loading state
     }
   };
 
+  // handleCreateAccount: Submits the registration form to create a new account. Used as onSubmit handler for the form.
   const handleCreateAccount = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        "https://itestify-backend-38u1.onrender.com/auths/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: emailValue,
-            full_name: nameValue,
-            password: passwordValue,
-            password2: confirmPasswordValue,
-            otp: otpValue,
-          }),
-        }
-      );
+      const response = await axios.post(`${getBaseUrl()}/auths/register`, {
+        email: emailValue,
+        full_name: nameValue,
+        password: passwordValue,
+        password2: confirmPasswordValue,
+        otp: otpValue,
+      });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create account");
-      }
-
-      const data = await response.json();
-      console.log("Account created successfully:", data);
+      console.log("Account created successfully:", response.data);
 
       // Store user data in localStorage
       const userData = {
@@ -177,21 +159,36 @@ const SignUp = () => {
 
       navigate("/");
     } catch (error) {
-      alert(`Failed to create account: ${error.message}`);
+      const errorMessage =
+        error.response?.data?.message || "Failed to create account";
+      alert(`Failed to create account: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleGoogleSignUp = () => {
+  // handleGoogleSignUp: Handles sign up with Google. Used as onClick handler for the Google sign up button.
+  const handleGoogleSignUp = async () => {
+    try {
+      const data = await signInWithGoogle();
+      const tokenId = data.user.getIdToken();
+      navigate("/");
+      const response = await axios.post(`${getBaseUrl()}/auths/google-login/`, {
+        id_token: tokenId,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to sign up with Google", error);
+    }
     // Placeholder for Google sign up functionality
   };
 
+  // handleAppleSignUp: Placeholder for Apple sign up functionality. Used as onClick handler for the Apple sign up button.
   const handleAppleSignUp = () => {
     // Placeholder for Apple sign up functionality
   };
 
-  // Function to get button text based on current state
+  // getOtpButtonText: Returns the appropriate text for the OTP button based on state. Used in the OTP button rendering.
   const getOtpButtonText = () => {
     if (isRequestingOtp) {
       return otpSent ? "Resending..." : "Requesting...";
@@ -416,7 +413,7 @@ const SignUp = () => {
         </div>
 
         <p className="text-center">
-          Already have an account?{" "}
+          Already have an account?
           <Link to="/login" className="text-primary-70 cursor-pointer">
             Log in
           </Link>

@@ -1,30 +1,27 @@
-import OTPInput from "../../../components/OTPInput";
+import React from "react";
 import { formatTime } from "../../../utils/formatTime";
 
-const ResetPassword = ({
-  showOtp,
-  isOtpComplete,
+import OTPInput from "../../../components/OTPInput";
+
+const VerifyEmail = ({
   loading,
-  email,
   onOtpSubmit,
+  showOtp,
   countDown,
-  handleResendEmail,
+  handleResendOtp,
+  emailValue,
 }) => {
   return (
-    <div
-      className={`${showOtp ? "block" : "hidden"}  ${
-        isOtpComplete ? "hidden" : "block"
-      }`}
-    >
+    <div>
       <div className={`${loading ? "opacity-25" : "opacity-100"}`}>
         <div
           className={`px-6 max-w-[546px] mx-auto flex flex-col gap-6 md:gap-12`}
         >
           <h1 className="text-center text-5xl mt-4 font-bold">
-            Reset Password
+            Verify Your Email
           </h1>
           <p className="text-secondary-50 text-center text-md">
-            We sent a code to {email} kindly enter the code below.
+            We sent a code to {emailValue} kindly enter the code below.
           </p>
           <form className="flex flex-col gap-0 md:gap-12 text-center md:h-auto">
             <OTPInput length={4} onOtpSubmit={onOtpSubmit} showOtp={showOtp} />
@@ -38,7 +35,7 @@ const ResetPassword = ({
                 Didn't receive any mail?{" "}
                 <button
                   type="button"
-                  onClick={handleResendEmail}
+                  onClick={handleResendOtp}
                   disabled={loading}
                   className={`${
                     loading
@@ -70,4 +67,4 @@ const ResetPassword = ({
   );
 };
 
-export default ResetPassword;
+export default VerifyEmail;

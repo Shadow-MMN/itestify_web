@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
+// showOtp: When true, focuses the first OTP input. Controlled by parent (e.g., ForgotPassword) to show/hide OTP UI and trigger focus.
 const OTPInput = ({ length = 4, onOtpSubmit = () => {}, showOtp }) => {
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
 
+  // useEffect: Focuses the first OTP input when showOtp becomes true. Used for improved UX when OTP UI is shown.
   useEffect(() => {
     if (showOtp) {
       inputRefs.current[0]?.focus();
     }
   }, [showOtp]);
 
+  // handleChange: Handles input change for each OTP field, updates OTP state, auto-focuses next, and submits when complete. Used as onChange handler for each input.
   const handleChange = (index, e) => {
     const value = e.target.value;
     if (isNaN(value)) return;
@@ -27,6 +30,7 @@ const OTPInput = ({ length = 4, onOtpSubmit = () => {}, showOtp }) => {
     }
   };
 
+  // handlePaste: Handles pasting into OTP fields, fills values, focuses next, and submits if complete. Used as onPaste handler for each input.
   const handlePaste = (index, e) => {
     e.preventDefault();
     const paste = e.clipboardData.getData("text");
@@ -56,6 +60,7 @@ const OTPInput = ({ length = 4, onOtpSubmit = () => {}, showOtp }) => {
     }
   };
 
+  // handleClick: Ensures correct focus and selection when an input is clicked. Used as onClick handler for each input.
   const handleClick = (index) => {
     inputRefs.current[index].setSelectionRange(1, 1);
 
@@ -64,6 +69,7 @@ const OTPInput = ({ length = 4, onOtpSubmit = () => {}, showOtp }) => {
     }
   };
 
+  // handleKeyDown: Handles backspace navigation between OTP fields. Used as onKeyDown handler for each input.
   const handleKeyDown = (index, e) => {
     if (
       e.key === "Backspace" &&

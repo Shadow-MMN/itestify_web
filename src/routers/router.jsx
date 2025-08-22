@@ -1,17 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import App from "../App";
-import Login from "../pages/auth/Login";
-import SignUp from "../pages/auth/SignUp";
+import Login from "../pages/auth/Login/Login";
+import SignUp from "../pages/auth/SignUp/SignUp";
 import ForgotPassword from "../pages/auth/ForgotPassword/ForgotPassword";
-import Videos from "../pages/Testimonies/Videos/Videos";
-import VideoDetails from "../pages/Testimonies/Videos/VideoDetail";
-import Texts from "../pages/Testimonies/Text/Texts";
+import Videos from "../pages/Videos/Videos";
+import VideoDetails from "../pages/Videos/VideoDetail";
+import Texts from "../pages/Text/Texts";
 import Quotes from "../pages/InspirationalPics/Quotes";
-import TextDetails from "../pages/Testimonies/Text/TextDetails";
+import TextDetails from "../pages/Text/TextDetails";
 import QuoteDetails from "../pages/InspirationalPics/QuoteDetails";
 import Category from "../pages/Category/Category";
 import CategoryDetail from "../pages/Category/CategoryDetail";
+
 const router = createBrowserRouter([
   {
     path: "/",

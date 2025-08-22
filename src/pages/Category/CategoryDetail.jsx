@@ -2,9 +2,10 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { BsFileText } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import { GoVideo } from "react-icons/go";
-import VideoCard from "../../components/Testimonies /Video/VideoCard";
-import TextCard from "../../components/Testimonies /Text/TextCard";
+
 import { useState } from "react";
+import VideoCard from "../../components/VideoCard";
+import TextCard from "../../components/TextCard";
 
 const categories = [
   {
