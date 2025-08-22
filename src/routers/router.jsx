@@ -12,7 +12,7 @@ import TextDetails from "../pages/Text/TextDetails";
 import QuoteDetails from "../pages/InspirationalPics/QuoteDetails";
 import Category from "../pages/Category/Category";
 import CategoryDetail from "../pages/Category/CategoryDetail";
-
+import About from "../pages/Abouts/About";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "about",
-        element: <h1>About Us</h1>,
+        element: <About />,
       },
       {
         path: "category",
